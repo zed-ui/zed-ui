@@ -1,6 +1,7 @@
 [workspace]
 members = [
     "zui",
+    "zui-shared",
     "zui-window",
     "zui-web-view",
 ]

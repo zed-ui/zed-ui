@@ -1,0 +1,12 @@
+[package]
+name = "zui-shared"
+version = "0.0.0"
+authors = ["Nikolai Vazquez"]
+license = "MIT OR Apache-2.0"
+homepage = "https://github.com/zed-ui"
+documentation = "https://docs.rs/zui-shared"
+edition = "2018"
+keywords = ["zed", "ui", "zui", "gui"]
+categories = ["gui", "web-programming", "rendering"]
+description = "[WIP] An internal crate used by ZedUI."
+include = ["Cargo.toml", "src/**/*.rs", "README.md", "CHANGELOG.md", "LICENSE*"]
