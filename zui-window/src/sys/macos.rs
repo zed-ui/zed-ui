@@ -52,24 +52,26 @@ impl Default for WindowBuilder {
     }
 }
 
-impl<'a> crate::WindowBuilder<'a> {
+impl WindowBuilder {
     fn ns_window_style_mask(&self) -> NSUInteger {
         use NSWindowStyleMask as M;
 
-        let mut mask = self.sys.style_mask.unwrap_or_else(|| {
+        let mut mask = self.style_mask.unwrap_or_else(|| {
             M::NSClosableWindowMask |
             M::NSMiniaturizableWindowMask |
             M::NSResizableWindowMask |
             M::NSTitledWindowMask
         }.bits());
 
-        if self.sys.titlebar_hidden {
+        if self.titlebar_hidden {
             mask |= M::NSFullSizeContentViewWindowMask.bits();
         }
 
         mask
     }
+}
 
+impl<'a> crate::WindowBuilder<'a> {
     fn content_rect(&self) -> NSRect {
         NSRect::new(
             NSPoint::new(0.0, 0.0),
@@ -83,7 +85,7 @@ impl<'a> crate::WindowBuilder<'a> {
         }
 
         let content_rect = self.content_rect();
-        let style_mask = self.ns_window_style_mask();
+        let style_mask = self.sys.ns_window_style_mask();
         let backing = appkit::NSBackingStoreBuffered as NSUInteger;
 
         let mut window = unsafe {
