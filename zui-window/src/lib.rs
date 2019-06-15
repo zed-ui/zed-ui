@@ -12,7 +12,12 @@ mod sys;
 pub mod dpi;
 pub mod os;
 
-/// A window instance.
+/// A handle to a window instance.
+///
+/// `Window` implements the [`Clone`] trait with reference counting semantics.
+///
+/// [`Clone`]: https://doc.rust-lang.org/std/clone/trait.Clone.html
+#[derive(Clone)]
 pub struct Window {
     sys: sys::Window,
     // !Send + !Sync

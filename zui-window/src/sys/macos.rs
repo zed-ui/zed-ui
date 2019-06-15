@@ -21,6 +21,7 @@ pub fn is_main_thread() -> bool {
     unsafe { msg_send![class!(NSThread), isMainThread] }
 }
 
+#[derive(Clone)]
 pub struct Window {
     pub ns_window: StrongPtr,
 }
