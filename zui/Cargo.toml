@@ -1,0 +1,15 @@
+[package]
+name = "zui"
+version = "0.0.0"
+authors = ["Nikolai Vazquez"]
+license = "MIT OR Apache-2.0"
+homepage = "https://github.com/zed-ui"
+documentation = "https://docs.rs/zui"
+edition = "2018"
+keywords = ["zed", "ui", "zui", "gui"]
+categories = ["gui"]
+description = "[WIP] ZedUI: cross-platform graphical user interfaces."
+include = ["Cargo.toml", "src/**/*.rs", "README.md", "CHANGELOG.md", "LICENSE*"]
+
+[dependencies]
+zui-window = { version = "0.0.0", path = "../zui-window" }
