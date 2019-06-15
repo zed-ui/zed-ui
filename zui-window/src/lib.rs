@@ -14,7 +14,8 @@ pub mod os;
 
 /// A handle to a window instance.
 ///
-/// `Window` implements the [`Clone`] trait with reference counting semantics.
+/// `Window` uses interior mutability and implements the [`Clone`] trait with
+/// reference counting semantics.
 ///
 /// [`Clone`]: https://doc.rust-lang.org/std/clone/trait.Clone.html
 #[derive(Clone)]
@@ -41,7 +42,7 @@ impl Window {
 
     /// Sets the displayed title.
     #[inline]
-    pub fn set_title(&mut self, title: &str) {
+    pub fn set_title(&self, title: &str) {
         self.sys.set_title(title);
     }
 }

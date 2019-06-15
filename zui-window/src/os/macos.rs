@@ -31,21 +31,21 @@ pub trait WindowExt {
 
     /// Sets the title of `self` to an `NSString`.
     #[inline]
-    unsafe fn set_title(&mut self, title: id) {
+    unsafe fn set_title(&self, title: id) {
         self.ns_window().setTitle_(title);
     }
 
     /// Sets the titlebar transparency and makes the content view full-size
     /// according to `hidden`.
     #[inline]
-    fn set_titlebar_hidden(&mut self, hidden: bool) {
+    fn set_titlebar_hidden(&self, hidden: bool) {
         self.set_full_size_content_view(hidden);
         self.set_titlebar_appears_transparent(hidden);
     }
 
     /// Calls `setTitlebarAppearsTransparent:` on `self`.
     #[inline]
-    fn set_titlebar_appears_transparent(&mut self, transparent: bool) {
+    fn set_titlebar_appears_transparent(&self, transparent: bool) {
         unsafe {
             self.ns_window().setTitlebarAppearsTransparent_(transparent as _);
         }
@@ -55,7 +55,7 @@ pub trait WindowExt {
     ///
     /// This enables or disables `NSFullSizeContentViewWindowMask`.
     #[inline]
-    fn set_full_size_content_view(&mut self, full_size: bool) {
+    fn set_full_size_content_view(&self, full_size: bool) {
         let bits = NSWindowStyleMask::NSFullSizeContentViewWindowMask.bits();
         self.update_style_mask(|mask| {
             if full_size {
@@ -74,7 +74,7 @@ pub trait WindowExt {
 
     /// Sets the content view of `self`.
     #[inline]
-    unsafe fn set_content_view(&mut self, content_view: id) {
+    unsafe fn set_content_view(&self, content_view: id) {
         self.ns_window().setContentView_(content_view)
     }
 
@@ -86,13 +86,13 @@ pub trait WindowExt {
 
     /// Sets the `NSWindowStyleMask` used by the `NSWindow`.
     #[inline]
-    fn set_style_mask<M: Into<NSUInteger>>(&mut self, mask: M) {
+    fn set_style_mask<M: Into<NSUInteger>>(&self, mask: M) {
         unsafe { msg_send![self.ns_window(), setStyleMask:mask.into()] };
     }
 
     /// Sets the `NSWindowStyleMask` used by the `NSWindow` to the value of `f`.
     #[inline]
-    fn update_style_mask<F, M>(&mut self, f: F)
+    fn update_style_mask<F, M>(&self, f: F)
     where
         F: FnOnce(NSUInteger) -> M,
         M: Into<NSUInteger>,

@@ -28,7 +28,7 @@ pub struct Window {
 
 impl Window {
     #[inline]
-    pub fn set_title(&mut self, title: &str) {
+    pub fn set_title(&self, title: &str) {
         unsafe {
             let title = StrongPtr::new(NSString::init_str(nil, title));
             self.ns_window.setTitle_(*title);
@@ -89,7 +89,7 @@ impl crate::WindowBuilder<'_> {
         let style_mask = self.sys.ns_window_style_mask();
         let backing = appkit::NSBackingStoreBuffered as NSUInteger;
 
-        let mut window = unsafe {
+        let window = unsafe {
             let ns_window: id = msg_send![class!(NSWindow), alloc];
             let ns_window: id = msg_send![
                 ns_window,
