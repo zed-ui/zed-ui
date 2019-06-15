@@ -9,6 +9,7 @@ extern crate objc;
 use std::marker::PhantomData;
 
 mod sys;
+pub mod dpi;
 pub mod os;
 
 /// A window instance.

@@ -7,4 +7,4 @@ pub extern crate zui_window as window;
 pub mod os;
 
 #[doc(inline)]
-pub use window::Window;
+pub use window::{Window, dpi};
