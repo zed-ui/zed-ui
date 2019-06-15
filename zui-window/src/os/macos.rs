@@ -25,6 +25,12 @@ pub trait WindowExt {
     /// Returns the `NSWindow` handle for `self`.
     fn ns_window(&self) -> id;
 
+    /// Returns the title of `self` as an `NSString`.
+    #[inline]
+    fn title(&self) -> id {
+        unsafe { self.ns_window().title() }
+    }
+
     /// Sets the title of `self` to an `NSString`.
     #[inline]
     unsafe fn set_title(&mut self, title: id) {
