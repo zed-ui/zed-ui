@@ -10,3 +10,10 @@ keywords = ["zed", "ui", "zui", "gui", "window"]
 categories = ["gui"]
 description = "[WIP] ZedUI windowing utilities."
 include = ["Cargo.toml", "src/**/*.rs", "README.md", "CHANGELOG.md", "LICENSE*"]
+
+[dependencies]
+cfg-if = "0.1"
+
+[target.'cfg(target_os = "macos")'.dependencies]
+cocoa = "0.18"
+objc = "0.2"
