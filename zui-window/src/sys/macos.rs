@@ -71,7 +71,7 @@ impl WindowBuilder {
     }
 }
 
-impl<'a> crate::WindowBuilder<'a> {
+impl crate::WindowBuilder<'_> {
     fn content_rect(&self) -> NSRect {
         NSRect::new(
             NSPoint::new(0.0, 0.0),
