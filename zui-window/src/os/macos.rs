@@ -8,13 +8,11 @@ use cocoa::{
     base::id,
     foundation::NSUInteger,
 };
+use objc::rc::StrongPtr;
 use crate::{
     Window,
     WindowBuilder,
-    sys::{
-        Window as SysWindow,
-        objc_ext::NSObject,
-    },
+    sys::Window as SysWindow,
 };
 
 /// macOS-specific extensions for [`Window`](../../struct.Window.html).
@@ -106,7 +104,7 @@ pub trait WindowExt {
 impl WindowExt for Window {
     #[inline]
     unsafe fn from_ns_window(ns_window: id) -> Self {
-        SysWindow { ns_window: NSObject::new(ns_window) }.into()
+        SysWindow { ns_window: StrongPtr::new(ns_window) }.into()
     }
 
     #[inline]

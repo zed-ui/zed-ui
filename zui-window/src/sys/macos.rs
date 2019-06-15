@@ -13,21 +13,23 @@ use cocoa::{
         NSUInteger,
     },
 };
+use objc::rc::StrongPtr;
 
 use crate::os::macos::WindowExt;
 
-pub mod objc_ext;
-use objc_ext::*;
+pub fn is_main_thread() -> bool {
+    unsafe { msg_send![class!(NSThread), isMainThread] }
+}
 
 pub struct Window {
-    pub ns_window: NSObject,
+    pub ns_window: StrongPtr,
 }
 
 impl Window {
     #[inline]
     pub fn set_title(&mut self, title: &str) {
         unsafe {
-            let title = NSObject::new(NSString::init_str(nil, title));
+            let title = StrongPtr::new(NSString::init_str(nil, title));
             self.ns_window.setTitle_(*title);
         }
     }
@@ -93,7 +95,7 @@ impl<'a> crate::WindowBuilder<'a> {
                             backing:backing
                               defer:NO
             ];
-            let ns_window = NSObject::new(ns_window);
+            let ns_window = StrongPtr::new(ns_window);
 
             crate::Window::from(Window { ns_window })
         };
