@@ -6,10 +6,15 @@ use cocoa::{
         NSWindowStyleMask,
     },
     base::id,
-    foundation::NSUInteger,
+    foundation::{
+        NSPoint,
+        NSSize,
+        NSUInteger,
+    },
 };
 use objc::rc::StrongPtr;
 use crate::{
+    dpi::*,
     Window,
     WindowBuilder,
     sys::Window as SysWindow,
@@ -139,5 +144,61 @@ impl<'a> WindowBuilderExt for WindowBuilder<'a> {
     fn titlebar_hidden(&mut self, hidden: bool) -> &mut Self {
         self.sys.titlebar_hidden = hidden;
         self
+    }
+}
+
+impl From<NSPoint> for PhysicalPosition {
+    #[inline]
+    fn from(NSPoint { x, y }: NSPoint) -> Self {
+        PhysicalPosition { x, y }
+    }
+}
+
+impl From<NSPoint> for LogicalPosition {
+    #[inline]
+    fn from(NSPoint { x, y }: NSPoint) -> Self {
+        LogicalPosition { x, y }
+    }
+}
+
+impl From<PhysicalPosition> for NSPoint {
+    #[inline]
+    fn from(PhysicalPosition { x, y }: PhysicalPosition) -> Self {
+        NSPoint { x, y }
+    }
+}
+
+impl From<LogicalPosition> for NSPoint {
+    #[inline]
+    fn from(LogicalPosition { x, y }: LogicalPosition) -> Self {
+        NSPoint { x, y }
+    }
+}
+
+impl From<NSSize> for PhysicalSize {
+    #[inline]
+    fn from(NSSize { width, height }: NSSize) -> Self {
+        PhysicalSize { width, height }
+    }
+}
+
+impl From<NSSize> for LogicalSize {
+    #[inline]
+    fn from(NSSize { width, height }: NSSize) -> Self {
+        LogicalSize { width, height }
+    }
+}
+
+impl From<PhysicalSize> for NSSize {
+    #[inline]
+    fn from(PhysicalSize { width, height }: PhysicalSize) -> Self {
+        NSSize { width, height }
+    }
+}
+
+impl From<LogicalSize> for NSSize {
+    #[inline]
+    fn from(LogicalSize { width, height }: LogicalSize) -> Self {
+        NSSize { width, height }
     }
 }
