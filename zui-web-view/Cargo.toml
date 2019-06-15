@@ -1,0 +1,12 @@
+[package]
+name = "zui-web-view"
+version = "0.0.0"
+authors = ["Nikolai Vazquez"]
+license = "MIT OR Apache-2.0"
+homepage = "https://github.com/zed-ui"
+documentation = "https://docs.rs/zui"
+edition = "2018"
+keywords = ["zed", "ui", "zui", "gui", "webview"]
+categories = ["gui", "web-programming", "rendering"]
+description = "[WIP] ZedUI utilities for making a web view with the operating system's browser technology."
+include = ["Cargo.toml", "src/**/*.rs", "README.md", "CHANGELOG.md", "LICENSE*"]

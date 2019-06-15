@@ -2,4 +2,5 @@
 members = [
     "zui",
     "zui-window",
+    "zui-web-view",
 ]
