@@ -1,0 +1,54 @@
+//! macOS-specific extensions.
+
+use std::ffi::CStr;
+use objc::rc::StrongPtr;
+use cocoa::foundation::NSString;
+use crate::{PlatformString, sys};
+
+/// macOS-specific extensions for [`PlatformString`](../../struct.PlatformString.html).
+pub trait PlatformStringExt {
+    /// Creates an instance wrapped around an
+    /// [`NSString`](https://developer.apple.com/documentation/foundation/nsstring).
+    unsafe fn from_ns_string(ns_string: StrongPtr) -> Self;
+
+    /// Returns a handle to the underlying `NSString` without changing ownership
+    /// semantics.
+    fn as_ns_string(&self) -> &StrongPtr;
+
+    /// Transfers ownership of the `NSString` out of `self`.
+    fn into_ns_string(self) -> StrongPtr;
+
+    /// Returns a reference to a UTF-8 encoded string that may have a shorter
+    /// lifetime than `self`.
+    ///
+    /// See the documentation for `UTF8String` on
+    /// [`NSString`](https://developer.apple.com/documentation/foundation/nsstring).
+    #[inline]
+    unsafe fn as_utf8_temp(&self) -> &str {
+        let c_str = CStr::from_ptr(self.as_ns_string().UTF8String());
+        std::str::from_utf8_unchecked(c_str.to_bytes())
+    }
+
+    /// Returns `self` encoded as UTF-8.
+    #[inline]
+    fn to_utf8(&self) -> String {
+        unsafe { self.as_utf8_temp().into() }
+    }
+}
+
+impl PlatformStringExt for PlatformString {
+    #[inline]
+    unsafe fn from_ns_string(ns_string: StrongPtr) -> Self {
+        PlatformString(sys::PlatformString { ns_string })
+    }
+
+    #[inline]
+    fn as_ns_string(&self) -> &StrongPtr {
+        &self.0.ns_string
+    }
+
+    #[inline]
+    fn into_ns_string(self) -> StrongPtr {
+        self.0.ns_string
+    }
+}
