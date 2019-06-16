@@ -23,7 +23,7 @@ use crate::{
 /// macOS-specific extensions for [`Window`](../../struct.Window.html).
 pub trait WindowExt {
     /// Creates a new instance from an `NSWindow` handle.
-    unsafe fn from_ns_window(ns_window: id) -> Self;
+    unsafe fn from_ns_window(ns_window: StrongPtr) -> Self;
 
     /// Returns the `NSWindow` handle for `self`.
     fn ns_window(&self) -> id;
@@ -108,8 +108,8 @@ pub trait WindowExt {
 
 impl WindowExt for Window {
     #[inline]
-    unsafe fn from_ns_window(ns_window: id) -> Self {
-        SysWindow { ns_window: StrongPtr::new(ns_window) }.into()
+    unsafe fn from_ns_window(ns_window: StrongPtr) -> Self {
+        SysWindow { ns_window }.into()
     }
 
     #[inline]
