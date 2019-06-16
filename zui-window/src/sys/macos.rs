@@ -5,17 +5,19 @@ use cocoa::{
         NSWindow,
         NSWindowStyleMask,
     },
-    base::{id, nil, NO},
+    base::{id, NO},
     foundation::{
         NSPoint,
         NSRect,
         NSSize,
-        NSString,
         NSUInteger,
     },
 };
 use objc::rc::StrongPtr;
-
+use shared::{
+    os::macos::PlatformStringExt,
+    PlatformString,
+};
 use crate::os::macos::WindowExt;
 
 pub fn is_main_thread() -> bool {
@@ -37,11 +39,8 @@ impl fmt::Debug for Window {
 
 impl Window {
     #[inline]
-    pub fn set_title(&self, title: &str) {
-        unsafe {
-            let title = StrongPtr::new(NSString::init_str(nil, title));
-            self.ns_window.setTitle_(*title);
-        }
+    pub fn set_title(&self, title: PlatformString) {
+        unsafe { self.ns_window.setTitle_(**title.as_ns_string()) };
     }
 }
 
@@ -81,7 +80,7 @@ impl WindowBuilder {
     }
 }
 
-impl crate::WindowBuilder<'_> {
+impl crate::WindowBuilder {
     fn content_rect(&self) -> NSRect {
         NSRect::new(
             NSPoint::new(0.0, 0.0),
@@ -112,8 +111,8 @@ impl crate::WindowBuilder<'_> {
             crate::Window::from(Window { ns_window })
         };
 
-        if let Some(title) = self.title {
-            window.set_title(title);
+        if let Some(title) = &self.title {
+            unsafe { WindowExt::set_title(&window, **title.as_ns_string()) };
         }
 
         if self.sys.titlebar_hidden {

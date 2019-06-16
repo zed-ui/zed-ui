@@ -13,7 +13,6 @@ include = ["Cargo.toml", "src/**/*.rs", "README.md", "CHANGELOG.md", "LICENSE*"]
 
 [dependencies]
 cfg-if = "0.1"
-zui-window = { version = "0.0.0", path = "../zui-window" }
 
 [target.'cfg(target_os = "macos")'.dependencies]
 cocoa = "0.18"

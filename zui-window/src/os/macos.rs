@@ -133,7 +133,7 @@ pub trait WindowBuilderExt {
     fn titlebar_hidden(&mut self, hidden: bool) -> &mut Self;
 }
 
-impl<'a> WindowBuilderExt for WindowBuilder<'a> {
+impl WindowBuilderExt for WindowBuilder {
     #[inline]
     fn style_mask<M: Into<NSUInteger>>(&mut self, mask: M) -> &mut Self {
         self.sys.style_mask = Some(mask.into());

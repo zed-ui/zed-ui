@@ -6,10 +6,13 @@
 #[macro_use]
 extern crate objc;
 
+extern crate zui_shared as shared;
+
 use std::{
     fmt,
     marker::PhantomData
 };
+use shared::PlatformString;
 
 mod sys;
 pub mod dpi;
@@ -46,24 +49,24 @@ impl fmt::Debug for Window {
 impl Window {
     /// Creates a builder suitable for constructing a new `Window` instance.
     #[inline]
-    pub fn builder<'a>() -> WindowBuilder<'a> {
+    pub fn builder() -> WindowBuilder {
         Default::default()
     }
 
     /// Sets the displayed title.
     #[inline]
-    pub fn set_title(&self, title: &str) {
-        self.sys.set_title(title);
+    pub fn set_title<S: Into<PlatformString>>(&self, title: S) {
+        self.sys.set_title(title.into());
     }
 }
 
 /// A type for configuring how a `Window` instance should be constructed.
-pub struct WindowBuilder<'a> {
+pub struct WindowBuilder {
     sys: sys::WindowBuilder,
-    title: Option<&'a str>,
+    title: Option<PlatformString>,
 }
 
-impl Default for WindowBuilder<'_> {
+impl Default for WindowBuilder {
     #[inline]
     fn default() -> Self {
         WindowBuilder {
@@ -73,7 +76,7 @@ impl Default for WindowBuilder<'_> {
     }
 }
 
-impl<'a> WindowBuilder<'a> {
+impl WindowBuilder {
     /// Creates a builder suitable for constructing a new `Window` instance.
     #[inline]
     pub fn new() -> Self {
@@ -82,8 +85,8 @@ impl<'a> WindowBuilder<'a> {
 
     /// Sets the window title.
     #[inline]
-    pub fn title(&mut self, title: &'a str) -> &mut Self {
-        self.title = Some(title);
+    pub fn title<S: Into<PlatformString>>(&mut self, title: S) -> &mut Self {
+        self.title = Some(title.into());
         self
     }
 
