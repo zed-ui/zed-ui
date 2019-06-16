@@ -1,6 +1,10 @@
 //! macOS-specific extensions.
 
-use objc::rc::StrongPtr;
+use std::ffi::c_void;
+use objc::{
+    rc::StrongPtr,
+    runtime,
+};
 use crate::{ZedString, sys};
 
 /// macOS-specific extensions for [`ZedString`](../../struct.ZedString.html).
@@ -49,5 +53,40 @@ impl ZedStringExt for ZedString {
     #[inline]
     unsafe fn as_utf8_temp(&self) -> &str {
         self.0.as_utf8_temp()
+    }
+}
+
+/// An Objective-C autorelease pool.
+#[derive(Debug, PartialEq, Eq)]
+pub struct AutoreleasePool(*mut c_void);
+
+impl Drop for AutoreleasePool {
+    #[inline]
+    fn drop(&mut self) {
+        unsafe { runtime::objc_autoreleasePoolPop(self.0) };
+    }
+}
+
+impl Default for AutoreleasePool {
+    #[inline]
+    fn default() -> Self {
+        unsafe { AutoreleasePool(runtime::objc_autoreleasePoolPush()) }
+    }
+}
+
+impl AutoreleasePool {
+    /// Creates a new autorelease pool.
+    #[inline]
+    pub fn new() -> Self {
+        Default::default()
+    }
+
+    /// Calls `f` within an `AutoreleasePool` frame.
+    #[inline]
+    pub fn with<F, T>(f: F) -> T where F: FnOnce() -> T {
+        let pool = AutoreleasePool::new();
+        let value = f();
+        drop(pool);
+        value
     }
 }
