@@ -15,10 +15,14 @@ use window::{
 
 /// macOS-specific extensions for [`WebView`](../../struct.WebView.html).
 pub trait WebViewExt {
-    /// Creates an instance from an existing [`WKWebView`].
-    ///
-    /// [`WKWebView`]: https://developer.apple.com/documentation/webkit/wkwebview
+    /// Creates an instance from an existing
+    /// [`WKWebView`](https://developer.apple.com/documentation/webkit/wkwebview).
     unsafe fn from_wk_web_view(wk_web_view: StrongPtr) -> Self;
+
+    /// Returns the
+    /// [`WKWebView`](https://developer.apple.com/documentation/webkit/wkwebview)
+    /// handle for `self`.
+    fn wk_web_view(&self) -> id;
 }
 
 impl WebViewExt for WebView {
@@ -26,6 +30,11 @@ impl WebViewExt for WebView {
         let ns_window = StrongPtr::new(msg_send![*wk_web_view, window]);
         let window = Window::from_ns_window(ns_window);
         SysWebView { wk_web_view, window }.into()
+    }
+
+    #[inline]
+    fn wk_web_view(&self) -> id {
+        *self.sys.wk_web_view
     }
 }
 
