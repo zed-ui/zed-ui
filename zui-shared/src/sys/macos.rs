@@ -23,8 +23,10 @@ impl fmt::Debug for PlatformString {
 impl PlatformString {
     #[inline]
     pub fn from_utf8(s: &str) -> Self {
-        let ns_string = unsafe { StrongPtr::new(NSString::init_str(nil, s)) };
-        PlatformString { ns_string }
+        unsafe {
+            let ns_string = StrongPtr::new(NSString::alloc(nil).init_str(s));
+            PlatformString { ns_string }
+        }
     }
 
     #[inline]
