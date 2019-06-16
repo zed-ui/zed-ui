@@ -6,8 +6,8 @@ mod sys;
 pub mod os;
 
 /// A string type specific to the targeted platform.
-#[derive(Clone)]
-pub struct PlatformString(sys::PlatformString);
+#[derive(Clone, Debug)]
+pub struct PlatformString(pub(crate) sys::PlatformString);
 
 impl From<&str> for PlatformString {
     #[inline]

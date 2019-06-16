@@ -1,8 +1,6 @@
 //! macOS-specific extensions.
 
-use std::ffi::CStr;
 use objc::rc::StrongPtr;
-use cocoa::foundation::NSString;
 use crate::{PlatformString, sys};
 
 /// macOS-specific extensions for [`PlatformString`](../../struct.PlatformString.html).
@@ -23,11 +21,7 @@ pub trait PlatformStringExt {
     ///
     /// See the documentation for `UTF8String` on
     /// [`NSString`](https://developer.apple.com/documentation/foundation/nsstring).
-    #[inline]
-    unsafe fn as_utf8_temp(&self) -> &str {
-        let c_str = CStr::from_ptr(self.as_ns_string().UTF8String());
-        std::str::from_utf8_unchecked(c_str.to_bytes())
-    }
+    unsafe fn as_utf8_temp(&self) -> &str;
 
     /// Returns `self` encoded as UTF-8.
     #[inline]
@@ -50,5 +44,10 @@ impl PlatformStringExt for PlatformString {
     #[inline]
     fn into_ns_string(self) -> StrongPtr {
         self.0.ns_string
+    }
+
+    #[inline]
+    unsafe fn as_utf8_temp(&self) -> &str {
+        self.0.as_utf8_temp()
     }
 }
