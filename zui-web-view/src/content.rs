@@ -20,6 +20,7 @@ pub(crate) enum ContentInner<'a> {
 }
 
 /// Content that can be displayed within a [`WebView`](struct.WebView.html).
+#[derive(Clone, Debug)]
 pub struct Content<'a>(pub(crate) ContentInner<'a>);
 
 impl<'a> Content<'a> {
