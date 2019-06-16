@@ -6,7 +6,10 @@
 #[macro_use]
 extern crate objc;
 
-use std::marker::PhantomData;
+use std::{
+    fmt,
+    marker::PhantomData
+};
 
 mod sys;
 pub mod dpi;
@@ -30,6 +33,13 @@ impl From<sys::Window> for Window {
     #[inline]
     fn from(sys: sys::Window) -> Self {
         Window { sys, _marker: PhantomData }
+    }
+}
+
+impl fmt::Debug for Window {
+    #[inline]
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        self.sys.fmt(f)
     }
 }
 

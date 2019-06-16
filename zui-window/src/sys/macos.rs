@@ -1,3 +1,4 @@
+use std::fmt;
 use cocoa::{
     appkit::{
         self,
@@ -24,6 +25,14 @@ pub fn is_main_thread() -> bool {
 #[derive(Clone)]
 pub struct Window {
     pub ns_window: StrongPtr,
+}
+
+impl fmt::Debug for Window {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        f.debug_struct("Window")
+            .field("ns_window", &*self.ns_window) // No `Debug` for `StrongPtr`
+            .finish()
+    }
 }
 
 impl Window {
