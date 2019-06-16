@@ -3,8 +3,12 @@
 #![deny(missing_docs)]
 
 pub extern crate zui_window as window;
+pub extern crate zui_web_view as web_view;
 
 pub mod os;
 
 #[doc(inline)]
-pub use window::{Window, dpi};
+pub use self::{
+    web_view::WebView,
+    window::{Window, dpi},
+};
