@@ -5,21 +5,21 @@
 mod sys;
 pub mod os;
 
-/// A string type specific to the targeted platform.
+/// A string type specific to the targeted ZedUI platform.
 #[derive(Clone, Debug)]
-pub struct PlatformString(pub(crate) sys::PlatformString);
+pub struct ZedString(sys::ZedString);
 
-impl From<&str> for PlatformString {
+impl From<&str> for ZedString {
     #[inline]
     fn from(s: &str) -> Self {
-        PlatformString::from_utf8(s)
+        ZedString::from_utf8(s)
     }
 }
 
-impl PlatformString {
+impl ZedString {
     /// Creates a new instance from a UTF-8 encoded string.
     #[inline]
     pub fn from_utf8(s: &str) -> Self {
-        PlatformString(sys::PlatformString::from_utf8(s))
+        ZedString(sys::ZedString::from_utf8(s))
     }
 }

@@ -1,10 +1,10 @@
 //! macOS-specific extensions.
 
 use objc::rc::StrongPtr;
-use crate::{PlatformString, sys};
+use crate::{ZedString, sys};
 
-/// macOS-specific extensions for [`PlatformString`](../../struct.PlatformString.html).
-pub trait PlatformStringExt {
+/// macOS-specific extensions for [`ZedString`](../../struct.ZedString.html).
+pub trait ZedStringExt {
     /// Creates an instance wrapped around an
     /// [`NSString`](https://developer.apple.com/documentation/foundation/nsstring).
     unsafe fn from_ns_string(ns_string: StrongPtr) -> Self;
@@ -30,10 +30,10 @@ pub trait PlatformStringExt {
     }
 }
 
-impl PlatformStringExt for PlatformString {
+impl ZedStringExt for ZedString {
     #[inline]
     unsafe fn from_ns_string(ns_string: StrongPtr) -> Self {
-        PlatformString(sys::PlatformString { ns_string })
+        ZedString(sys::ZedString { ns_string })
     }
 
     #[inline]

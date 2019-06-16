@@ -10,22 +10,22 @@ use cocoa::{
 use objc::rc::StrongPtr;
 
 #[derive(Clone)]
-pub struct PlatformString {
+pub struct ZedString {
     pub ns_string: StrongPtr
 }
 
-impl fmt::Debug for PlatformString {
+impl fmt::Debug for ZedString {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         unsafe { self.as_utf8_temp().fmt(f) }
     }
 }
 
-impl PlatformString {
+impl ZedString {
     #[inline]
     pub fn from_utf8(s: &str) -> Self {
         unsafe {
             let ns_string = StrongPtr::new(NSString::alloc(nil).init_str(s));
-            PlatformString { ns_string }
+            ZedString { ns_string }
         }
     }
 

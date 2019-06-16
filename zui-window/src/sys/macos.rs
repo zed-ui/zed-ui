@@ -15,8 +15,8 @@ use cocoa::{
 };
 use objc::rc::StrongPtr;
 use shared::{
-    os::macos::PlatformStringExt,
-    PlatformString,
+    os::macos::ZedStringExt,
+    ZedString,
 };
 use crate::os::macos::WindowExt;
 
@@ -39,7 +39,7 @@ impl fmt::Debug for Window {
 
 impl Window {
     #[inline]
-    pub fn set_title(&self, title: PlatformString) {
+    pub fn set_title(&self, title: ZedString) {
         unsafe { self.ns_window.setTitle_(**title.as_ns_string()) };
     }
 }

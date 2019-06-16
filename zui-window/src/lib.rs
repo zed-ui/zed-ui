@@ -12,7 +12,7 @@ use std::{
     fmt,
     marker::PhantomData
 };
-use shared::PlatformString;
+use shared::ZedString;
 
 mod sys;
 pub mod dpi;
@@ -55,7 +55,7 @@ impl Window {
 
     /// Sets the displayed title.
     #[inline]
-    pub fn set_title<S: Into<PlatformString>>(&self, title: S) {
+    pub fn set_title<S: Into<ZedString>>(&self, title: S) {
         self.sys.set_title(title.into());
     }
 }
@@ -63,7 +63,7 @@ impl Window {
 /// A type for configuring how a `Window` instance should be constructed.
 pub struct WindowBuilder {
     sys: sys::WindowBuilder,
-    title: Option<PlatformString>,
+    title: Option<ZedString>,
 }
 
 impl Default for WindowBuilder {
@@ -85,7 +85,7 @@ impl WindowBuilder {
 
     /// Sets the window title.
     #[inline]
-    pub fn title<S: Into<PlatformString>>(&mut self, title: S) -> &mut Self {
+    pub fn title<S: Into<ZedString>>(&mut self, title: S) -> &mut Self {
         self.title = Some(title.into());
         self
     }
