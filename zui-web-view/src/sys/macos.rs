@@ -29,11 +29,11 @@ impl WebView {
     pub fn set_content(&self, content: &Content) {
         match content.0 {
             ContentInner::Html(html) => unsafe {
-                let content = NSString::init_str(nil, html);
+                let content = NSString::alloc(nil).init_str(html);
                 self.set_content_ns_string(content, nil)
             },
             ContentInner::Url(url) => unsafe {
-                let url = NSString::init_str(nil, url);
+                let url = NSString::alloc(nil).init_str(url);
                 let url = msg_send![class!(NSURL), URLWithString:url];
                 self.set_content_url(url)
             },
