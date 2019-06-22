@@ -1,6 +1,8 @@
-# ZedUI
+<div align="center">
+  <img src="https://zed-ui.dev/static/images/zed-ui-banner.png" width="800">
+</div>
 
-A cross platform GUI framework that allows for mixing various technologies.
+ZedUI is a cross platform GUI framework that allows for mixing various technologies.
 
 This project is composed of the following libraries:
 - `zui`
