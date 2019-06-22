@@ -1,6 +1,7 @@
 //! Internal functionality shared between the ZedUI family of crates.
 
 #![deny(missing_docs)]
+#![doc(html_logo_url = "https://zed-ui.dev/static/logos/zed-ui.svg")]
 
 mod sys;
 pub mod os;

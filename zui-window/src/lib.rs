@@ -1,6 +1,7 @@
 //! ZedUI windowing utilities.
 
 #![deny(missing_docs)]
+#![doc(html_logo_url = "https://zed-ui.dev/static/logos/zed-ui.svg")]
 
 #[cfg(target_os = "macos")]
 #[macro_use]
