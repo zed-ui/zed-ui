@@ -6,6 +6,11 @@ os:
 - osx
 - windows
 
+matrix:
+  allow_failures:
+  - os: linux
+  - os: windows
+
 env:
   global:
   - RUSTFLAGS: "-Dwarnings"
