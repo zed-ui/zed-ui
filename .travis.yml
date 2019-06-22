@@ -1,0 +1,7 @@
+language: rust
+rust: stable
+os:
+- linux
+- osx
+- windows
+script: cargo test
