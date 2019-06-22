@@ -1,7 +1,18 @@
 language: rust
 rust: stable
+
 os:
 - linux
 - osx
 - windows
+
+env:
+  global:
+  - RUSTFLAGS: "-Dwarnings"
+  - RUST_BACKTRACE: "full"
+
+cache:
+  directories:
+  - $HOME/.cargo
+
 script: cargo test
