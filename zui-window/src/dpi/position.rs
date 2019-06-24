@@ -14,10 +14,24 @@ impl From<(f64, f64)> for PhysicalPosition {
     }
 }
 
+impl From<(i32, i32)> for PhysicalPosition {
+    #[inline]
+    fn from((x, y): (i32, i32)) -> Self {
+        Self::new(x.into(), y.into())
+    }
+}
+
 impl From<PhysicalPosition> for (f64, f64) {
     #[inline]
     fn from(PhysicalPosition { x, y }: PhysicalPosition) -> Self {
         (x, y)
+    }
+}
+
+impl From<PhysicalPosition> for (i32, i32) {
+    #[inline]
+    fn from(PhysicalPosition { x, y }: PhysicalPosition) -> Self {
+        (x.round() as _, y.round() as _)
     }
 }
 

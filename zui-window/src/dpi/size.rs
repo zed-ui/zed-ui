@@ -14,10 +14,24 @@ impl From<(f64, f64)> for PhysicalSize {
     }
 }
 
+impl From<(i32, i32)> for PhysicalSize {
+    #[inline]
+    fn from((w, h): (i32, i32)) -> Self {
+        Self::new(w.into(), h.into())
+    }
+}
+
 impl From<PhysicalSize> for (f64, f64) {
     #[inline]
     fn from(PhysicalSize { width, height }: PhysicalSize) -> Self {
         (width, height)
+    }
+}
+
+impl From<PhysicalSize> for (i32, i32) {
+    #[inline]
+    fn from(PhysicalSize { width, height }: PhysicalSize) -> Self {
+        (width.round() as _, height.round() as _)
     }
 }
 
