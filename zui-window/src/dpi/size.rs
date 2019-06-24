@@ -70,6 +70,19 @@ impl PhysicalSize {
         PhysicalSize { width, height }
     }
 
+    /// Returns a new size with the width and height updated by `f`.
+    #[inline]
+    pub fn map<F: FnMut(f64) -> f64>(self, mut f: F) -> Self {
+        Self::new(f(self.width), f(self.height))
+    }
+
+    /// Updates the width and height with `f`.
+    #[inline]
+    pub fn apply<'a, F: FnMut(&'a mut f64)>(&'a mut self, mut f: F) {
+        f(&mut self.width);
+        f(&mut self.height);
+    }
+
     /// Scales a `LogicalSize` to a `PhysicalSize` by `dpi_factor`.
     #[inline]
     pub fn from_logical(size: LogicalSize, dpi_factor: f64) -> Self {
@@ -153,6 +166,19 @@ impl LogicalSize {
     #[inline]
     pub const fn new(width: f64, height: f64) -> Self {
         LogicalSize { width, height }
+    }
+
+    /// Returns a new size with the width and height updated by `f`.
+    #[inline]
+    pub fn map<F: FnMut(f64) -> f64>(self, mut f: F) -> Self {
+        Self::new(f(self.width), f(self.height))
+    }
+
+    /// Updates the width and height with `f`.
+    #[inline]
+    pub fn apply<'a, F: FnMut(&'a mut f64)>(&'a mut self, mut f: F) {
+        f(&mut self.width);
+        f(&mut self.height);
     }
 
     /// Scales a `LogicalSize` to a `PhysicalSize` by `dpi_factor`.

@@ -70,6 +70,19 @@ impl PhysicalPosition {
         PhysicalPosition { x, y }
     }
 
+    /// Returns a new position with X and Y updated by `f`.
+    #[inline]
+    pub fn map<F: FnMut(f64) -> f64>(self, mut f: F) -> Self {
+        Self::new(f(self.x), f(self.y))
+    }
+
+    /// Updates X and Y with `f`.
+    #[inline]
+    pub fn apply<'a, F: FnMut(&'a mut f64)>(&'a mut self, mut f: F) {
+        f(&mut self.x);
+        f(&mut self.y);
+    }
+
     /// Scales a `LogicalPosition` to a `PhysicalPosition` by `dpi_factor`.
     #[inline]
     pub fn from_logical(position: LogicalPosition, dpi_factor: f64) -> Self {
@@ -153,6 +166,19 @@ impl LogicalPosition {
     #[inline]
     pub const fn new(x: f64, y: f64) -> Self {
         LogicalPosition { x, y }
+    }
+
+    /// Returns a new position with X and Y updated by `f`.
+    #[inline]
+    pub fn map<F: FnMut(f64) -> f64>(self, mut f: F) -> Self {
+        Self::new(f(self.x), f(self.y))
+    }
+
+    /// Updates X and Y with `f`.
+    #[inline]
+    pub fn apply<'a, F: FnMut(&'a mut f64)>(&'a mut self, mut f: F) {
+        f(&mut self.x);
+        f(&mut self.y);
     }
 
     /// Scales a `LogicalPosition` to a `PhysicalPosition` by `dpi_factor`.
