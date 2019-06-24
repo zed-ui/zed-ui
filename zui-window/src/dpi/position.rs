@@ -9,8 +9,8 @@ pub struct PhysicalPosition {
 
 impl From<(f64, f64)> for PhysicalPosition {
     #[inline]
-    fn from((w, h): (f64, f64)) -> Self {
-        Self::new(w, h)
+    fn from((x, y): (f64, f64)) -> Self {
+        Self::new(x, y)
     }
 }
 
@@ -52,15 +52,15 @@ pub struct LogicalPosition {
 
 impl From<(f64, f64)> for LogicalPosition {
     #[inline]
-    fn from((w, h): (f64, f64)) -> Self {
-        Self::new(w, h)
+    fn from((x, y): (f64, f64)) -> Self {
+        Self::new(x, y)
     }
 }
 
 impl From<(i32, i32)> for LogicalPosition {
     #[inline]
-    fn from((w, h): (i32, i32)) -> Self {
-        Self::new(w.into(), h.into())
+    fn from((x, y): (i32, i32)) -> Self {
+        Self::new(x.into(), y.into())
     }
 }
 
